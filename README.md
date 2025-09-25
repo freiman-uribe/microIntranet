@@ -2,19 +2,6 @@
 
 Sistema web integral desarrollado con Laravel para la gestión de usuarios, cotizaciones y notificaciones administrativas en entornos empresariales.
 
-## 📋 Tabla de Contenidos
-- [Características](#características)
-- [Requisitos del Sistema](#requisitos-del-sistema)
-- [Instalación](#instalación)
-- [Configuración](#configuración)
-- [Uso del Sistema](#uso-del-sistema)
-- [Comandos Artisan](#comandos-artisan)
-- [Arquitectura](#arquitectura)
-- [Base de Datos](#base-de-datos)
-- [Funcionalidades](#funcionalidades)
-- [Seguridad](#seguridad)
-- [Contribución](#contribución)
-
 ## 🚀 Características
 
 ### 👥 Gestión de Usuarios
@@ -170,20 +157,9 @@ php artisan serve
 ```
 El sistema estará disponible en: `http://127.0.0.1:8000`
 
-### Crear Usuario Administrador (Primera vez)
+### Crear Usuarios y productos
 ```bash
-php artisan tinker
-```
-```php
-use App\Models\User;
-User::create([
-    'nombre' => 'Admin',
-    'apellido' => 'Sistema',
-    'email' => 'admin@microintranet.com',
-    'edad' => 30,
-    'password' => bcrypt('password123'),
-    'admin' => true
-]);
+php artisan db:seed
 ```
 
 ### Credenciales de Acceso por Defecto
@@ -192,23 +168,9 @@ User::create([
 
 ## 🔧 Comandos Artisan
 
-### Comandos de Notificaciones
-```bash
-# Mostrar todas las notificaciones del sistema
-php artisan notifications:show
-
-# Mostrar solo notificaciones de administradores
-php artisan notifications:show --admin-only
-
-# Probar seguridad del sistema de notificaciones
-php artisan notifications:test-security
-```
 
 ### Comandos de Usuarios
 ```bash
-# Probar paginación de usuarios
-php artisan users:test-pagination
-
 # Mostrar estadísticas de usuarios menores
 php artisan app:show-minor-users-stats
 ```
@@ -235,13 +197,6 @@ php artisan reset:show-links --active
 
 # Limpiar enlaces expirados de recuperación
 php artisan auth:clear-resets
-```
-
-### Comandos de Testing
-```bash
-# Probar notificaciones de usuarios menores
-php artisan app:test-minor-user-notification
-php artisan app:test-minor-user-notifications
 ```
 
 ### Comandos Laravel Estándar
@@ -377,213 +332,6 @@ php artisan migrate:fresh
 - Cambiar su contraseña
 - Solicitar recuperación de contraseña
 ```
-
-## 🚦 Testing
-
-### Ejecutar Tests
-```bash
-# Todos los tests
-php artisan test
-
-# Tests específicos
-php artisan test --filter UserTest
-
-# Con cobertura
-php artisan test --coverage
-```
-
-### Tests Disponibles
-- Unit Tests para modelos
-- Feature Tests para controladores
-- Tests de integración
-- Tests de API
-
-## 📝 Logs y Debugging
-
-### Ubicación de Logs
-```bash
-# Ver logs en tiempo real
-php artisan pail
-
-# Limpiar logs
-php artisan log:clear
-
-# Ubicación manual
-storage/logs/laravel.log
-```
-
-### Debug Mode
-Para desarrollo, mantener en `.env`:
-```env
-APP_DEBUG=true
-LOG_LEVEL=debug
-```
-
-## 🔄 Mantenimiento
-
-### Comandos de Limpieza
-```bash
-# Limpiar todo el caché
-php artisan optimize:clear
-
-# Optimizar para producción
-php artisan optimize
-
-# Limpiar vistas compiladas
-php artisan view:clear
-
-# Limpiar configuración
-php artisan config:clear
-```
-
-### Backup de Base de Datos
-```bash
-# SQLite
-cp database/database.sqlite database/backup_$(date +%Y%m%d_%H%M%S).sqlite
-
-# MySQL
-mysqldump -u usuario -p microintranet > backup_$(date +%Y%m%d_%H%M%S).sql
-```
-
-## 🌐 Despliegue en Producción
-
-### Preparación
-```bash
-# Instalar dependencias de producción
-composer install --no-dev --optimize-autoloader
-
-# Compilar assets para producción
-npm run build
-
-# Configurar caché
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-
-# Configurar permisos
-chmod -R 755 storage/
-chmod -R 755 bootstrap/cache/
-```
-
-### Variables de Entorno de Producción
-```env
-APP_ENV=production
-APP_DEBUG=false
-APP_URL=https://tu-dominio.com
-
-# Base de datos de producción
-DB_CONNECTION=mysql
-DB_HOST=tu-host
-DB_DATABASE=tu_bd
-DB_USERNAME=tu_usuario
-DB_PASSWORD=tu_contraseña
-
-# Email de producción
-MAIL_MAILER=smtp
-# ... configuración de email
-```
-
-## 🐛 Solución de Problemas
-
-### Errores Comunes
-
-**Error: Class not found**
-```bash
-composer dump-autoload
-```
-
-**Error: Permission denied**
-```bash
-sudo chmod -R 775 storage/
-sudo chmod -R 775 bootstrap/cache/
-```
-
-**Error: Key not found**
-```bash
-php artisan key:generate
-```
-
-**Error: Database not found**
-```bash
-touch database/database.sqlite
-php artisan migrate
-```
-
-## 📞 Soporte
-
-Para reportar bugs o solicitar características:
-1. Crear un issue en el repositorio
-2. Proporcionar logs relevantes
-3. Incluir pasos para reproducir el problema
-4. Especificar versión de PHP y Laravel
-
 ## 📄 Licencia
 
 Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
-
-## 🤝 Contribución
-
-### Cómo Contribuir
-1. Fork del repositorio
-2. Crear rama para la feature (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit de los cambios (`git commit -am 'Agregar nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Crear Pull Request
-
-### Estándares de Código
-- Seguir PSR-12 para PHP
-- Usar camelCase para JavaScript
-- Documentar funciones públicas
-- Escribir tests para nuevas funcionalidades
-- Usar nombres descriptivos para variables y métodos
-
-### Comandos de Desarrollo
-```bash
-# Verificar estilo de código
-./vendor/bin/pint
-
-# Analizar código
-php artisan insights
-
-# Ejecutar tests
-php artisan test
-
-# Servidor de desarrollo con hot reload
-npm run dev
-php artisan serve
-```
-
----
-
-**Micro Intranet** - Sistema de Gestión Empresarial  
-Desarrollado con ❤️ usando Laravel 12 y Bootstrap 5
-
-**Versión**: 1.0.0  
-**Última Actualización**: Septiembre 2025
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
